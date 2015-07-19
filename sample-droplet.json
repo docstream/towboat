@@ -1,0 +1,14 @@
+{
+    "name": "my-lemp",
+    "region": "ams3",
+    "image": "lemp",
+    "size" : "512mb",
+    "ssh_keys": [673907,964778],
+    "backups": true,
+    "private_networking":true,
+    "user_data":"
+#cloud-config
+#
+# make some magic here
+"
+}

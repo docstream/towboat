@@ -28,6 +28,25 @@ will return ;
       images
       images_user
 
+
+To read (GET) a resource-list just skip 'post' in command ;
+
+   ./towboat droplets
+
+   ..long list..
+
+And to create new (sample) resource ;
+
+    cat sample-droplet.json | ./towboat post droplets
+
+### Filters
+
+It's possible to filter the droplets-list further like this ;
+
+    . ./dro.filters
+    ./towboat droplets | region ams1 | priv_ips | json_list
+    ./towboat droplets | publ_ips | json_list
+
 ## Dependencies
 
   * jq

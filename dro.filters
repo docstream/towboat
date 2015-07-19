@@ -17,6 +17,7 @@ publ_ips(){
 json_list(){
   xargs \
     | sed -e 's/ /","/g' \
-    | sed -e 's/^/[/' \
+    | sed -e 's/^/["/' \
+    | sed -e 's/$/"/' \
     | tr '\n' ']'
 }
