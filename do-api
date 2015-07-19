@@ -2,6 +2,7 @@
 
 API=https://api.digitalocean.com/v2
 API_DEF_PARMS=per_page=99
+ENDE="-__-"
 
 usage() {
   echo
