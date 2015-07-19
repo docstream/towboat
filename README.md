@@ -12,9 +12,10 @@ First set env var DO_TOKEN ;
     # smart to put this into ~/.bashrc
     export DO_TOKEN={my_token_from_api_settings}
 
+
     ./towboat help
    
-will give you ;
+will return ;
 
     usage: ./towboat [post] <resource>
 
