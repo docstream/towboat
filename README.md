@@ -28,20 +28,26 @@ will return ;
       images
       images_user
 
+Delete is not supported, and the field selection is just *HIGHLY OPINIONATED*
+
+### Reading
 
 To read (GET) a resource-list just skip 'post' in command ;
 
    ./towboat droplets
 
    ..long list..
+   
+### Posting
 
 And to create new (sample) resource ;
 
+    # Creates a new DROPLET in DigitalOcean CLOUD !!
     cat sample-droplet.json | ./towboat post droplets
 
 ### Filters
 
-It's possible to filter the droplets-list further like this ;
+It's possible to filter the 'droplets' output further like this ;
 
     . ./dro.filters
     ./towboat droplets | region ams1 | priv_ips | json_list
