@@ -3,7 +3,7 @@ Towboat
 
 Simple CLI to communicate w DigitalOcean API.
 
-NO heavy script-interpreters required !
+NO heavy script-interpreters required , just (soon standard util) jq.
 
 ## Usage
 
