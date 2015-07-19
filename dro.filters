@@ -1,0 +1,22 @@
+# arg1 = region-code (str)
+region(){
+  awk "\$4 ~ /$1/ {print}" \
+    | sort -R
+}
+
+priv_ips(){
+  egrep -o "private;[0-9\.]*" \
+    | sed 's|[^;]*;||' 
+}
+
+publ_ips(){
+  egrep -o "public;[0-9\.]*" \
+    | sed 's|[^;]*;||' 
+}
+
+json_list(){
+  xargs \
+    | sed -e 's/ /","/g' \
+    | sed -e 's/^/[/' \
+    | tr '\n' ']'
+}

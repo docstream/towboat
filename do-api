@@ -1,0 +1,103 @@
+#!/bin/sh
+
+API=https://api.digitalocean.com/v2
+API_DEF_PARMS=per_page=99
+
+usage() {
+  echo
+  echo " usage: $0 [post] <resource>" 
+  echo 
+  echo " resource: "
+  echo 
+  echo "   help|usage"
+  echo "   droplets"
+  echo "   regions"
+  echo "   keys"
+  echo "   images"
+  echo "   images_user"
+  printf "$1\n" 1>&2
+  exit 1
+}
+
+if test -z "$1"; then
+  usage
+fi
+
+if test "$1" = "--help"; then
+  usage
+fi
+
+if test -z "$DO_TOKEN";then
+  usage "\n ! ERROR: Missing env DO_TOKEN"
+fi
+
+command -v curl > /dev/null || usage "\n ! ERROR: need curl"
+command -v jq > /dev/null || usage "\n ! ERROR: need jq"
+command -v awk > /dev/null || usage "\n ! ERROR: need awk"
+
+# ----------- comm
+get() {
+  curl -s -X GET "$API/$1?$API_DEF_PARMS" \
+    -H "Authorization: Bearer $DO_TOKEN"
+}
+
+post(){
+  curl -s -H "Authorization: Bearer $DO_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data-binary @- -X POST "$API/$1"
+}
+
+help(){
+  usage
+}
+
+_onecol2tbl (){
+awk 'BEGIN { RS="-__-"; FS="\n"}
+{ for (i=2; i <= NF; i++){
+    printf "%s ",$i 
+  }
+  printf "\n" 
+  }' | tail -n+2
+}
+
+droplets() {
+  get droplets | jq -r -c \
+  '.droplets[] | "-__-", .name , .status, .id, 
+  .region.slug, .size_slug, .image.distribution, 
+  (.networks.v4[]|.type +";"+.ip_address)' \
+  | _onecol2tbl
+}
+
+regions() {
+  get regions | jq -r -c \
+    '.regions[] | "-__-", .slug, .name' \
+    | _onecol2tbl
+}
+
+keys() {
+  get account/keys | jq -r -c \
+    '.ssh_keys[] | "-__-", .name, .id, .fingerprint' \
+    | _onecol2tbl
+}
+
+images() {
+  get images$1 | jq -r -c \
+    '.images[] | "-__-", .name, .slug,
+    .type, .id, .distribution' \
+    | _onecol2tbl
+}
+
+images_user() {
+  images ?private=true
+}
+
+if test ! -z "$2" && test "post" = $1; then
+  post $2 <&0 | jq '.'
+else
+  $1
+fi
+
+if test "$?" -gt 0
+then
+  usage
+fi
