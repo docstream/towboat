@@ -1,17 +1,20 @@
 Towboat
--------
+=======
 
 Simple CLI to communicate w DigitalOcean API.
 
 NO heavy script-interpreters required !
 
-Usage
-=====
+## Usage
+
+First set env var DO_TOKEN ;
+    
+    # smart to put this into ~/.bashrc
+    export DO_TOKEN={my_token_from_api_settings}
 
 ...
 
-Dependencies
-=============
+## Dependencies
 
   * jq
   * curl
