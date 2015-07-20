@@ -13,7 +13,7 @@ NO heavy script-interpreters required , just POSIX
 
 Debian/Mint way to get these;
 
-    apt-get install jq curl
+    $ apt-get install jq curl
 
 ## Usage
 
@@ -46,7 +46,9 @@ To read (GET) a resource-list, just skip 'post' in command ;
 
     $ ./towboat droplets
 
-    ..long list..
+    ..long 
+    long..
+    list..
    
 ### Posting
 
