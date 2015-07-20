@@ -71,4 +71,4 @@ It's possible to filter the 'droplets' output further like this ;
     ./towboat droplets \
       | region ams3 | tee /tmp/ds.txt \
       | priv_ips | json_str_list > /tmp/priv_ips.json && \
-    cat /d/ds.txt | publ_ips > /tmp/publ_ips.txt
+    cat /tmp/ds.txt | publ_ips > /tmp/publ_ips.txt
