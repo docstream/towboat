@@ -23,7 +23,7 @@ First set env var DO_TOKEN ;
     export DO_TOKEN={my_token_from_api_settings}
 
 
-    ./towboat help
+    $ ./towboat help
    
 will return ;
 
@@ -44,7 +44,7 @@ Delete is not supported, and the field selection is just *HIGHLY OPINIONATED*
 
 To read (GET) a resource-list, just skip 'post' in command ;
 
-    ./towboat droplets
+    $ ./towboat droplets
 
     ..long list..
    
@@ -53,14 +53,20 @@ To read (GET) a resource-list, just skip 'post' in command ;
 To create new (sample) resource ;
 
     # Creates a new DROPLET in DigitalOcean CLOUD !!
-    cat sample-droplet.json | ./towboat post droplets
+    $ cat sample-droplet.json | ./towboat post droplets
 
 ### Filters
 
 It's possible to filter the 'droplets' output further like this ;
 
-    . ./dro.filters
-    ./towboat droplets | region ams1 | priv_ips | json_list
-    ./towboat droplets | publ_ips | json_list
+    $ . ./dro.filters
+    $ ./towboat droplets | region ams1 | priv_ips | json_str_list
+    $ ./towboat droplets | publ_ips | json_str_list
 
+### DASH *Singleline* Sample
 
+    . ./dro.filters; \
+    ./towboat droplets \
+      | region ams3 | tee /tmp/ds.txt \
+      | priv_ips | json_str_list > /tmp/priv_ips.json && \
+    cat /d/ds.txt | publ_ips > /tmp/publ_ips.txt
