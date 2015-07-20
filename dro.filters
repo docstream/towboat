@@ -1,7 +1,6 @@
 # arg1 = region-code (str)
 region(){
-  awk "\$4 ~ /$1/ {print}" \
-    | sort -r
+  awk "\$4 ~ /$1/ {print}" 
 }
 
 priv_ips(){
