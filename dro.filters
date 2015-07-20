@@ -14,10 +14,7 @@ publ_ips(){
     | sed 's|[^;]*;||' 
 }
 
-json_list(){
-  xargs \
-    | sed -e 's/ /","/g' \
-    | sed -e 's/^/["/' \
-    | sed -e 's/$/"/' \
-    | tr '\n' ']'
+json_str_list(){
+  awk '{ print "\"" $0 "\"" }' \
+  | jq -s -c "."
 }
