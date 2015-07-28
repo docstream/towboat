@@ -3,6 +3,8 @@ Towboat
 
 Simple CLI to communicate w DigitalOcean API
 
+Converts useless JSON into nixy-nice text ;0
+
 NO heavy script-interpreters required , just POSIX
 
 ## Dependencies
