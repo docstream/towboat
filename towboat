@@ -3,6 +3,7 @@
 API=https://api.digitalocean.com/v2
 API_DEF_PARMS=per_page=99
 ENDE="-__-"
+DO_TOKEN=${DO_TOKEN:-$DO_TOKEN_RO}
 
 usage() {
   echo
