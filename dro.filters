@@ -1,19 +1,30 @@
 # arg1 = region-code (str)
 region(){
+  # NB uses SHELL var
   awk "\$4 ~ /$1/ {print}" 
 }
 
-priv_ips(){
-  egrep -o "private;[0-9\.]*" \
-    | sed 's|[^;]*;||' 
+
+active_priv(){
+  awk '$2 ~ /active/ && $7 ~ /private.*/' 
+}
+
+active_publ(){
+  awk '$2 ~ /active/ && $7 ~ /public.*/' 
+}
+
+hosts(){
+  awk '{gsub(/[^;]*;/,"",$8);print $8,$1}'
 }
 
 publ_ips(){
-  egrep -o "public;[0-9\.]*" \
-    | sed 's|[^;]*;||' 
+  active_publ | sed 's|[^;]*;||' 
+}
+
+priv_ips(){
+  active_priv | sed 's|[^;]*;||' 
 }
 
 json_str_list(){
-  awk '{ print "\"" $0 "\"" }' \
-  | jq -s -c "."
+  awk '{ print "\"" $0 "\"" }' | jq -s -c "."
 }
