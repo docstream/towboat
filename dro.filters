@@ -6,11 +6,11 @@ region(){
 
 
 active_priv(){
-  awk '$2 ~ /active/ && $7 ~ /private.*/' 
+  awk '$2 ~ /active/ && $0 ~ /\sprivate;.*/' 
 }
 
 active_publ(){
-  awk '$2 ~ /active/ && $7 ~ /public.*/' 
+  awk '$2 ~ /active/ && $0 ~ /\spublic;.*/' 
 }
 
 hosts(){
@@ -18,11 +18,11 @@ hosts(){
 }
 
 publ_ips(){
-  active_publ | sed 's|[^;]*;||' 
+  active_publ | sed 's|.*public;\([^\ ]*\)\ .*|\1|' 
 }
 
 priv_ips(){
-  active_priv | sed 's|[^;]*;||' 
+  active_priv | sed 's|.*private;\([^\ ]*\)\ .*|\1|' 
 }
 
 json_str_list(){
